@@ -1,9 +1,17 @@
 package hnr.piwnica.backend.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Post {
+
+    @Id
+    @GeneratedValue( strategy= GenerationType.AUTO )
+
     private long postID;
     private String description;
     private String tags;
@@ -12,11 +20,14 @@ public class Post {
     private String time;
     private String imgPath;
     private boolean view;
-    private long ownerID;
+    @ManyToOne
+    private User user;
 
-
-
-    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view, long ownerID){
+    public Post(){
+        super();
+    }
+    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view){
+        super();
         this.postID = postID;
         this.description = description;
         this.tags = tags;
@@ -25,7 +36,6 @@ public class Post {
         this.time = time;
         this.imgPath = imgPath;
         this.view = view;
-        this.ownerID = ownerID;
     }
     public long getPostID() {
         return postID;
@@ -88,15 +98,13 @@ public class Post {
     public void setView(boolean view) {
         this.view = view;
     }
-    public long getOwnerID() {
-        return ownerID;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwnerID(long ownerID) {
-        this.ownerID = ownerID;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-
 
 
 
