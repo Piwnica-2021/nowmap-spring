@@ -15,18 +15,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    void login(@RequestBody LoginRequest form) {
-
+    Object login(@RequestBody LoginRequest form) {
+        return new Object();
     }
 
     @PostMapping("/logout")
-    void logout() {
-
+    Object logout() {
+        return new Object();
     }
 
     @PostMapping("/signup")
-    void signup(@RequestBody SignupRequest form) {
-
+    Object signup(@RequestBody SignupRequest form) {
+        return new Object();
     }
 
 }
