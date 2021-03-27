@@ -59,14 +59,7 @@ public class PostController {
 
         for(Post post: all_posts)
         {
-
             double distance = MathUtil.distanceFromCoordinates(lat, lon, post.getLatitude(), post.getLongitude());
-            System.out.println(lat);
-            System.out.println(lon);
-            System.out.println(post.getLatitude());
-            System.out.println(post.getLongitude());
-            System.out.println(distance);
-            System.out.println();
 
             if(distance < minDistance)
             {
