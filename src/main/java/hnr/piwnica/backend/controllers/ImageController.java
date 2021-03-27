@@ -22,9 +22,15 @@ public class ImageController {
     }
 
     @PostMapping("/posts/{id}/image")
-    String uploadPostImage(@PathVariable Integer id, @RequestParam("file") MultipartFile file) {
+    String uploadPostImage(@PathVariable long id, @RequestParam("file") MultipartFile file) {
+        var post = postRepository.findById(id).orElse(null);
+        if (post == null)
+            return null;
+
         var filename = storageService.store(file);
-        // TODO update post filename
+        post.setImgPath(filename);
+        postRepository.save(post);
+
         return filename;
     }
 
@@ -33,10 +39,12 @@ public class ImageController {
             produces = MediaType.IMAGE_JPEG_VALUE
     )
     @ResponseBody
-    public ResponseEntity<Resource> getPostImage(@PathVariable Integer id) {
-        // TODO get post filename from db
-//        var filename = postRepository.getPostFilename()
-        var filename = "Screenshot_28.png";
+    public ResponseEntity<Resource> getPostImage(@PathVariable long id) {
+        var post = postRepository.findById(id).orElse(null);
+        if (post == null)
+            return null;
+
+        var filename = post.getImgPath();
 
         try {
             Resource file = storageService.load(filename);
