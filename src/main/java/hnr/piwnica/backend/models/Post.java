@@ -4,6 +4,29 @@ import javax.persistence.Entity;
 
 @Entity
 public class Post {
+    private long postID;
+    private String description;
+    private String tags;
+    private double longitude;
+    private double latitude;
+    private String time;
+    private String imgPath;
+    private boolean view;
+    private long ownerID;
+
+
+
+    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view, long ownerID){
+        this.postID = postID;
+        this.description = description;
+        this.tags = tags;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.time = time;
+        this.imgPath = imgPath;
+        this.view = view;
+        this.ownerID = ownerID;
+    }
     public long getPostID() {
         return postID;
     }
@@ -27,29 +50,6 @@ public class Post {
     public void setTags(String tags) {
         this.tags = tags;
     }
-
-    private long postID;
-    private String description;
-    private String tags;
-    private double longitude;
-    private double latitude;
-    private String time;
-    private String imgPath;
-    private boolean view;
-    private long ownerID;
-
-    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view, long ownerID){
-        this.postID = postID;
-        this.description = description;
-        this.tags = tags;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.time = time;
-        this.imgPath = imgPath;
-        this.view = view;
-        this.ownerID = ownerID;
-    }
-
     public double getLatitude() {
         return latitude;
     }
