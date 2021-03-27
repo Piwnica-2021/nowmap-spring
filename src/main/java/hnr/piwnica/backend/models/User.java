@@ -1,9 +1,6 @@
 package hnr.piwnica.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class User {
@@ -13,6 +10,7 @@ public class User {
 
     private long userID;
     private String nick;
+    @Column(length = 10000)
     private String description;
     private String avatarName;
     public User(long userID, String nick, String description, String avatarName){
