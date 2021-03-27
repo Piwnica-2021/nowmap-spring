@@ -46,12 +46,12 @@ public class FilesystemStorageService implements StorageService {
             try (InputStream inputStream = file.getInputStream()) {
                 Files.copy(inputStream, dest, StandardCopyOption.REPLACE_EXISTING);
             }
+
+            return filename;
         }
         catch (IOException e) {
             return null;
         }
-
-        return null;
     }
 
     @Override
