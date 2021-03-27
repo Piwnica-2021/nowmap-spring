@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Random;
 
 @Service
 public class FilesystemStorageService implements StorageService {
@@ -29,10 +30,31 @@ public class FilesystemStorageService implements StorageService {
         Files.createDirectories(root);
     }
 
+    private String getRandomString() {
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 16;
+        Random random = new Random();
+
+        return random.ints(leftLimit, rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+    }
+
+    private String getRandomFilename() {
+        String filename;
+        do {
+            filename = getRandomString();
+        } while (root.resolve(filename).normalize().toAbsolutePath().toFile().exists());
+        return filename;
+    }
+
     @Override
     public String store(MultipartFile file) {
         try {
-            var filename = file.getOriginalFilename(); // TODO generate random
+            var filename = getRandomFilename();
             if (filename == null)
                 return null;
 
