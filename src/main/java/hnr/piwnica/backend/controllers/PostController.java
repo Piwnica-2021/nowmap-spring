@@ -28,11 +28,22 @@ public class PostController {
     }
 
     @PostMapping("/create")
-    public Object createPost(@RequestBody CreatePostRequest request) {
+    public long createPost(@RequestBody CreatePostRequest request) {
         var date = new Date();
         var ownerId = 0; // TODO get logged in user id
 
-        return new Object();
+        var post = new Post();
+        post.setTitle(request.getTitle());
+        post.setDescription(request.getDescription());
+        post.setLatitude(request.getLatitude());
+        post.setLongitude(request.getLongitude());
+//        post.setTags();
+        post.setTime(date);
+//        post.setUser();
+
+        post = postRepository.save(post);
+
+        return post.getPostID();
     }
 
     @GetMapping("/{post_id}")
