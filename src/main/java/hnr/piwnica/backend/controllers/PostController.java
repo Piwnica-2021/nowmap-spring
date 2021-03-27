@@ -56,40 +56,10 @@ public class PostController {
     }
 
     @GetMapping("/recent")
-    public @ResponseBody List<Post> getRecentPosts(@RequestParam Long count, @RequestParam Long last)
+    public @ResponseBody List<Post> getRecentPosts(@RequestParam Long count)
     {
-        if(last == -1)
-        {
-            Long lastId = postRepository.selectOffsetPost( 0L ).getPostID();
-            List<Post> recentPosts = postRepository.selectRecentPosts(count, lastId);
-            return recentPosts;
-        }
-        else
-        {
-            List<Post> recentPosts = postRepository.selectRecentPosts(count, last);
-            return recentPosts;
-        }
-
-    }
-
-    @GetMapping("/recent/last")
-    public @ResponseBody Long getRecentLast(@RequestParam Long count, @RequestParam Long last)
-    {
-        if(last == -1)
-        {
-            Long lastId = postRepository.selectOffsetPost( 0L ).getPostID();
-            List<Post> recentPosts = postRepository.selectRecentPosts(count, lastId);
-            int postLength = recentPosts.size();
-            Long newLastId = recentPosts.get(postLength - 1).getPostID();
-            return newLastId;
-        }
-        else
-        {
-            List<Post> recentPosts = postRepository.selectRecentPosts(count, last);
-            int postLength = recentPosts.size();
-            Long newLastId = recentPosts.get(postLength - 1).getPostID();
-            return newLastId;
-        }
+        List<Post> recentPosts = postRepository.selectRecentPosts(count);
+        return recentPosts;
     }
 
     @GetMapping("/near")
