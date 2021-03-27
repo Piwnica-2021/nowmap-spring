@@ -14,6 +14,9 @@ public class Post {
     @GeneratedValue( strategy= GenerationType.AUTO )
 
     private long postID;
+
+
+    private String title;
     private String description;
     private String tags;
     private double longitude;
@@ -27,9 +30,10 @@ public class Post {
     public Post(){
         super();
     }
-    public Post (long postID, String description, String tags, double longitude, double latitude, Date time, String imgPath, boolean view){
+    public Post (long postID, String title, String description, String tags, double longitude, double latitude, Date time, String imgPath, boolean view){
         super();
         this.postID = postID;
+        this.title = title;
         this.description = description;
         this.tags = tags;
         this.longitude = longitude;
@@ -105,6 +109,13 @@ public class Post {
 
     public void setUser(User user) {
         this.user = user;
+    }
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
 
