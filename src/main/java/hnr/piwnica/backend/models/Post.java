@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.crypto.Data;
 
 @Entity
 public class Post {
@@ -17,7 +18,7 @@ public class Post {
     private String tags;
     private double longitude;
     private double latitude;
-    private String time;
+    private Data time;
     private String imgPath;
     private boolean view;
     @ManyToOne
@@ -26,7 +27,7 @@ public class Post {
     public Post(){
         super();
     }
-    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view){
+    public Post (long postID, String description, String tags, double longitude, double latitude, Data time, String imgPath, boolean view){
         super();
         this.postID = postID;
         this.description = description;
@@ -75,11 +76,11 @@ public class Post {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-    public String getTime() {
+    public Data getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Data time) {
         this.time = time;
     }
 
