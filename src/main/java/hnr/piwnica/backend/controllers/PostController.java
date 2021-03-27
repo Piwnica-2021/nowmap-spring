@@ -36,6 +36,11 @@ public class PostController {
         return postRepository.selectRecentPosts(count);
     }
 
+//    @GetMapping("/near")
+//    private List<Post> getPost(@PathVariable Integer id)
+//    {
+//        all_posts = postRepository.selectAllPosts();
+//    }
 
 //    @GetMapping("/featured")
 //    private List<Post> getPost(@PathVariable Integer id)
@@ -43,9 +48,5 @@ public class PostController {
 //
 //    }
 
-//    @GetMapping("/near")
-//    private List<Post> getPost(@PathVariable Integer id)
-//    {
-//
-//    }
+
 }
