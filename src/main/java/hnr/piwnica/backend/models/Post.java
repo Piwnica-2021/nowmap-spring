@@ -5,19 +5,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.util.Date;
+
 
 @Entity
 public class Post {
 
     @Id
     @GeneratedValue( strategy= GenerationType.AUTO )
-
     private long postID;
     private String description;
     private String tags;
     private double longitude;
     private double latitude;
-    private String time;
+    private Date time;
     private String imgPath;
     private boolean view;
     @ManyToOne
@@ -26,7 +27,7 @@ public class Post {
     public Post(){
         super();
     }
-    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view){
+    public Post (long postID, String description, String tags, double longitude, double latitude, Date time, String imgPath, boolean view){
         super();
         this.postID = postID;
         this.description = description;
@@ -75,11 +76,11 @@ public class Post {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-    public String getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

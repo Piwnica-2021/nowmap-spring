@@ -11,5 +11,10 @@ import org.springframework.stereotype.Repository;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query("select p from Post p where p.postID = ?1")
-    Post selectPostById(Long post_id);
+    public Post selectPostById(Long post_id);
+
+    @Query(
+            value = "select * from post p order by p.time desc limit ?1",
+            nativeQuery = true)
+    public List<Post> selectRecentPosts(Long count);
 }

@@ -30,13 +30,11 @@ public class PostController {
         return postRepository.selectPostById(post_id);
     }
 
-
-
-//    @GetMapping("/recent")
-//    private List<Post> getPost(@PathVariable Integer id)
-//    {
-//
-//    }
+    @GetMapping("/recent/{count}")
+    public @ResponseBody List<Post> getRecentPosts(@PathVariable Long count)
+    {
+        return postRepository.selectRecentPosts(count);
+    }
 
 
 //    @GetMapping("/featured")
