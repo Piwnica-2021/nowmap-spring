@@ -15,9 +15,20 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
 
     @Query(
-            value = "select * from post p order by p.time desc limit ?1",
+            value = "select * from post p " +
+                    "where p.postID < ?2 " +
+                    "order by p.time desc " +
+                    "limit ?1",
             nativeQuery = true)
-    public List<Post> selectRecentPosts(Long count);
+    public List<Post> selectRecentPosts(Long count, Long last);
+
+    @Query(
+            value = "select * from post p " +
+                    "order by p.postID desc " +
+                    "limit 1 " +
+                    "offset 0",
+            nativeQuery = true)
+    public Post selectOffsetPost(Long offset);
 
 
     @Query(
