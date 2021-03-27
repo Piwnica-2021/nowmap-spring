@@ -3,6 +3,8 @@ package hnr.piwnica.backend.dto;
 public class ProfileDTO {
     // null if user set field to private
 
+    public Integer id;
+
     public String username;
     public String email;
 
