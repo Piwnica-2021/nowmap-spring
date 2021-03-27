@@ -1,9 +1,42 @@
 package hnr.piwnica.backend.models;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Post {
+
+    @Id
+    @GeneratedValue( strategy= GenerationType.AUTO )
+
+    private long postID;
+    private String description;
+    private String tags;
+    private double longitude;
+    private double latitude;
+    private String time;
+    private String imgPath;
+    private boolean view;
+    @ManyToOne
+    private User user;
+
+    public Post(){
+        super();
+    }
+    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view){
+        super();
+        this.postID = postID;
+        this.description = description;
+        this.tags = tags;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.time = time;
+        this.imgPath = imgPath;
+        this.view = view;
+    }
     public long getPostID() {
         return postID;
     }
@@ -27,29 +60,6 @@ public class Post {
     public void setTags(String tags) {
         this.tags = tags;
     }
-
-    private long postID;
-    private String description;
-    private String tags;
-    private double longitude;
-    private double latitude;
-    private String time;
-    private String imgPath;
-    private boolean view;
-    private long ownerID;
-
-    public Post (long postID, String description, String tags, double longitude, double latitude, String time, String imgPath, boolean view, long ownerID){
-        this.postID = postID;
-        this.description = description;
-        this.tags = tags;
-        this.longitude = longitude;
-        this.latitude = latitude;
-        this.time = time;
-        this.imgPath = imgPath;
-        this.view = view;
-        this.ownerID = ownerID;
-    }
-
     public double getLatitude() {
         return latitude;
     }
@@ -88,15 +98,13 @@ public class Post {
     public void setView(boolean view) {
         this.view = view;
     }
-    public long getOwnerID() {
-        return ownerID;
+    public User getUser() {
+        return user;
     }
 
-    public void setOwnerID(long ownerID) {
-        this.ownerID = ownerID;
+    public void setUser(User user) {
+        this.user = user;
     }
-
-
 
 
 
