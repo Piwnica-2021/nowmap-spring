@@ -2,14 +2,12 @@ package hnr.piwnica.backend.controllers;
 
 //import stuff respository and model
 
-import hnr.piwnica.backend.models.HealthLog;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -22,7 +20,7 @@ public class PostCreateController {
     }
 
     @PostMapping("/create")
-    private @ResponseBody String createPost(@RequestParam String description, @RequestParam List<String> tags,
+    private @ResponseBody String createPost(@RequestParam String text, @RequestParam List<String> tags,
                                             @RequestParam Integer longitude, @RequestParam Integer latitude) {
         Date timeNow = new Date();
         // TODO jak bedzie model postu
