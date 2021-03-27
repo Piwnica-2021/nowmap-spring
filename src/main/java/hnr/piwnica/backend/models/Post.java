@@ -1,10 +1,6 @@
 package hnr.piwnica.backend.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -17,6 +13,8 @@ public class Post {
 
 
     private String title;
+  
+    @Column(length = 10000)
     private String description;
     private String tags;
     private double longitude;
