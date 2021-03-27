@@ -1,5 +1,7 @@
 package hnr.piwnica.backend.controllers;
 
+import hnr.piwnica.backend.repo.PostRepository;
+import hnr.piwnica.backend.repo.UserRepository;
 import hnr.piwnica.backend.requests.CreatePostRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,9 +15,11 @@ import java.util.Date;
 public class PostController {
 
     private final PostRepository postRepository;
+    private final UserRepository userRepository;
 
-    public PostController(PostRepository postRepo) {
+    public PostController(PostRepository postRepo, UserRepository userRepo) {
         postRepository = postRepo;
+        userRepository = userRepo;
     }
 
     @PostMapping("/create")
