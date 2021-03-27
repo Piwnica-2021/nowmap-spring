@@ -13,6 +13,7 @@ public class Post {
 
 
     private String title;
+  
     @Column(length = 10000)
     private String description;
     private String tags;
