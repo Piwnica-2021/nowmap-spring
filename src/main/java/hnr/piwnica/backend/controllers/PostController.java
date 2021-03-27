@@ -55,10 +55,41 @@ public class PostController {
         return postRepository.selectPostById(post_id);
     }
 
-    @GetMapping("/recent/{count}")
-    public @ResponseBody List<Post> getRecentPosts(@PathVariable Long count)
+    @GetMapping("/recent")
+    public @ResponseBody List<Post> getRecentPosts(@RequestParam Long count, @RequestParam Long last)
     {
-        return postRepository.selectRecentPosts(count);
+        if(last == -1)
+        {
+            Long lastId = postRepository.selectOffsetPost( 0L ).getPostID();
+            List<Post> recentPosts = postRepository.selectRecentPosts(count, lastId);
+            return recentPosts;
+        }
+        else
+        {
+            List<Post> recentPosts = postRepository.selectRecentPosts(count, last);
+            return recentPosts;
+        }
+
+    }
+
+    @GetMapping("/recent/last")
+    public @ResponseBody Long getRecentLast(@RequestParam Long count, @RequestParam Long last)
+    {
+        if(last == -1)
+        {
+            Long lastId = postRepository.selectOffsetPost( 0L ).getPostID();
+            List<Post> recentPosts = postRepository.selectRecentPosts(count, lastId);
+            int postLength = recentPosts.size();
+            Long newLastId = recentPosts.get(postLength - 1).getPostID();
+            return newLastId;
+        }
+        else
+        {
+            List<Post> recentPosts = postRepository.selectRecentPosts(count, last);
+            int postLength = recentPosts.size();
+            Long newLastId = recentPosts.get(postLength - 1).getPostID();
+            return newLastId;
+        }
     }
 
     @GetMapping("/near")
@@ -66,7 +97,7 @@ public class PostController {
     {
         List<Post> all_posts = postRepository.selectAllPosts();
         List<Post> near_posts = new ArrayList<Post>();
-        double minDistance = 5000;
+        double minDistance = 10000;
 
         for(Post post: all_posts)
         {
@@ -78,6 +109,27 @@ public class PostController {
             }
         }
         return near_posts;
+    }
+
+    @GetMapping("/near/dist")
+    public @ResponseBody List<Long> getPostDist(@RequestParam double lat, @RequestParam double lon)
+    {
+        List<Post> all_posts = postRepository.selectAllPosts();
+        List<Long> near_posts_dist = new ArrayList<Long>();
+        double minDistance = 10000;
+
+        for(Post post: all_posts)
+        {
+            double distance = MathUtil.distanceFromCoordinates(lat, lon, post.getLatitude(), post.getLongitude());
+
+            if(distance < minDistance)
+            {
+                long i = (long) Math.ceil(distance);
+                i =  ((i + 99) / 100) * 100;
+                near_posts_dist.add(i);
+            }
+        }
+        return near_posts_dist;
     }
 
 }
