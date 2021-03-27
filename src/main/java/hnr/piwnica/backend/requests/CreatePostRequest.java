@@ -5,7 +5,7 @@ import java.util.List;
 public class CreatePostRequest {
     private String title;
     private String description;
-    private List<String> tags;
+    private String tags;
     private Double latitude;
     private Double longitude;
 
@@ -17,7 +17,7 @@ public class CreatePostRequest {
         return description;
     }
 
-    public List<String> getTags() {
+    public String getTags() {
         return tags;
     }
 

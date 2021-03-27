@@ -37,7 +37,7 @@ public class PostController {
         post.setDescription(request.getDescription());
         post.setLatitude(request.getLatitude());
         post.setLongitude(request.getLongitude());
-//        post.setTags();
+        post.setTags(request.getTags());
         post.setTime(date);
 //        post.setUser();
 
