@@ -105,7 +105,7 @@ public class PostController {
     @GetMapping("/featured")
     public @ResponseBody List<Post> getFeaturedPost(@RequestParam Long upvotes)
     {
-        List<Post> all_posts = postRepository.selectAllPosts();
+        List<Post> all_posts = postRepository.selectAllPostsOrderUpvotes();
         List<Post> featured_posts = new ArrayList<Post>();
         double minUpvotes = upvotes;
 
@@ -123,7 +123,7 @@ public class PostController {
     @GetMapping("/featured/upvotes")
     public @ResponseBody List<Long> getPostUpvotes(@RequestParam Long upvotes)
     {
-        List<Post> all_posts = postRepository.selectAllPosts();
+        List<Post> all_posts = postRepository.selectAllPostsOrderUpvotes();
         List<Long> featured_posts_upvotes = new ArrayList<Long>();
         double minUpvotes = upvotes;
 
