@@ -22,13 +22,14 @@ public class Post {
     private Date time;
     private String imgPath;
     private boolean view;
+    private Long upvotes;
     @ManyToOne
     private User user;
 
     public Post(){
         super();
     }
-    public Post (long postID, String title, String description, String tags, double longitude, double latitude, Date time, String imgPath, boolean view){
+    public Post (long postID, String title, String description, String tags, double longitude, double latitude, Date time, String imgPath, boolean view, Long upvotes){
         super();
         this.postID = postID;
         this.title = title;
@@ -39,6 +40,7 @@ public class Post {
         this.time = time;
         this.imgPath = imgPath;
         this.view = view;
+        this.upvotes = upvotes;
     }
     public long getPostID() {
         return postID;
@@ -116,6 +118,13 @@ public class Post {
         this.title = title;
     }
 
+    public Long getUpvotes() {
+        return upvotes;
+    }
+
+    public void setUpvotes(Long upvotes) {
+        this.upvotes = upvotes;
+    }
 
 
 }

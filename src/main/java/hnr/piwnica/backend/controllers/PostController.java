@@ -63,11 +63,11 @@ public class PostController {
     }
 
     @GetMapping("/near")
-    public @ResponseBody List<Post> getPost(@RequestParam double lat, @RequestParam double lon)
+    public @ResponseBody List<Post> getNearPost(@RequestParam double lat, @RequestParam double lon, @RequestParam double radius)
     {
         List<Post> all_posts = postRepository.selectAllPosts();
         List<Post> near_posts = new ArrayList<Post>();
-        double minDistance = 10000;
+        double minDistance = radius;
 
         for(Post post: all_posts)
         {
@@ -82,11 +82,11 @@ public class PostController {
     }
 
     @GetMapping("/near/dist")
-    public @ResponseBody List<Long> getPostDist(@RequestParam double lat, @RequestParam double lon)
+    public @ResponseBody List<Long> getPostDist(@RequestParam double lat, @RequestParam double lon, @RequestParam double radius)
     {
         List<Post> all_posts = postRepository.selectAllPosts();
         List<Long> near_posts_dist = new ArrayList<Long>();
-        double minDistance = 10000;
+        double minDistance = radius;
 
         for(Post post: all_posts)
         {
@@ -100,6 +100,42 @@ public class PostController {
             }
         }
         return near_posts_dist;
+    }
+
+    @GetMapping("/featured")
+    public @ResponseBody List<Post> getFeaturedPost(@RequestParam Long upvotes)
+    {
+        List<Post> all_posts = postRepository.selectAllPosts();
+        List<Post> featured_posts = new ArrayList<Post>();
+        double minUpvotes = upvotes;
+
+        for(Post post: all_posts)
+        {
+            Long postUpvotes = post.getUpvotes();
+            if(postUpvotes > minUpvotes)
+            {
+                featured_posts.add(post);
+            }
+        }
+        return featured_posts;
+    }
+
+    @GetMapping("/featured/likes")
+    public @ResponseBody List<Long> getPostUpvotes(@RequestParam Long upvotes)
+    {
+        List<Post> all_posts = postRepository.selectAllPosts();
+        List<Long> featured_posts_upvotes = new ArrayList<Long>();
+        double minUpvotes = upvotes;
+
+        for(Post post: all_posts)
+        {
+            Long postUpvotes = post.getUpvotes();
+            if(postUpvotes > minUpvotes)
+            {
+                featured_posts_upvotes.add(postUpvotes);
+            }
+        }
+        return featured_posts_upvotes;
     }
 
 }
