@@ -120,7 +120,7 @@ public class PostController {
         return featured_posts;
     }
 
-    @GetMapping("/featured/likes")
+    @GetMapping("/featured/upvotes")
     public @ResponseBody List<Long> getPostUpvotes(@RequestParam Long upvotes)
     {
         List<Post> all_posts = postRepository.selectAllPosts();
