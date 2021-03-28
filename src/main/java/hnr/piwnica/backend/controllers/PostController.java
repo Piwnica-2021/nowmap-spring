@@ -111,10 +111,13 @@ public class PostController {
                 map.put(i, post);
             }
         }
-//        map.entrySet()
-//                .stream()
-//                .sorted(Map.Entry.<Long, Post>comparingByKey())
-//                .forEach(System.out::println);
+        final List<Post>new_near_posts = new ArrayList<Post>();
+        map.entrySet()
+                .stream()
+                .sorted(Map.Entry.<Long, Post>comparingByKey())
+                .forEach(longPostEntry -> {
+                    near_posts.add(longPostEntry.getValue());
+                });
 
         return near_posts;
     }
