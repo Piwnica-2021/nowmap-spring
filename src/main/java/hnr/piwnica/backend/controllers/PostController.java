@@ -118,10 +118,9 @@ public class PostController {
                 .sorted(Map.Entry.<Long, Post>comparingByKey())
                 .forEach(longPostEntry -> {
                     System.out.println(longPostEntry);
-                    near_posts.add(longPostEntry.getValue());
+                    new_near_posts.add(longPostEntry.getValue());
                 });
-        System.out.println(new ArrayList<Post>(map.values()));
-        return all_posts;
+        return new_near_posts;
     }
 
     @GetMapping("/featured")
