@@ -34,4 +34,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             value = "select * from post p",
             nativeQuery = true)
     public List<Post> selectAllPosts();
+
+    @Query(
+            value = "select * from post p order by p.upvotes desc",
+            nativeQuery = true)
+    public List<Post> selectAllPostsOrderUpvotes();
 }
