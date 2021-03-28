@@ -40,6 +40,7 @@ public class PostController {
         post.setLongitude(request.getLongitude());
         post.setTags(request.getTags());
         post.setTime(date);
+        post.setUpvotes(0L);
 //        post.setUser();
 
         post = postRepository.save(post);
@@ -116,10 +117,11 @@ public class PostController {
                 .stream()
                 .sorted(Map.Entry.<Long, Post>comparingByKey())
                 .forEach(longPostEntry -> {
+                    System.out.println(longPostEntry);
                     near_posts.add(longPostEntry.getValue());
                 });
-
-        return near_posts;
+        System.out.println(new ArrayList<Post>(map.values()));
+        return all_posts;
     }
 
     @GetMapping("/featured")
