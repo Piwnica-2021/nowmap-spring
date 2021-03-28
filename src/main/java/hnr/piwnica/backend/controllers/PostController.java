@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/api/v1/posts")
@@ -49,7 +47,7 @@ public class PostController {
         return post.getPostID();
     }
 
-    @GetMapping("/{post_id}/like")
+    @PostMapping("/{post_id}/like")
     public @ResponseBody Post upvotePost(@PathVariable Long post_id)
     {
         postRepository.updatePostUpvoted(post_id);
@@ -64,18 +62,23 @@ public class PostController {
     }
 
     @GetMapping("/recent")
-    public @ResponseBody List<Post> getRecentPosts(@RequestParam Long count)
+    public @ResponseBody List<Post> getRecentPosts()
     {
-        List<Post> recentPosts = postRepository.selectRecentPosts(count);
+        List<Post> recentPosts = postRepository.selectRecentPosts();
         return recentPosts;
     }
+
+
 
     @GetMapping("/near")
     public @ResponseBody List<Post> getNearPost(@RequestParam double lat, @RequestParam double lon, @RequestParam double radius)
     {
         List<Post> all_posts = postRepository.selectAllPosts();
         List<Post> near_posts = new ArrayList<Post>();
+        List<Long> near_posts_dist = new ArrayList<Long>();
         double minDistance = radius;
+
+        Map<Long, Post> map = new HashMap<>();
 
         for(Post post: all_posts)
         {
@@ -84,8 +87,16 @@ public class PostController {
             if(distance < minDistance)
             {
                 near_posts.add(post);
+                long i = (long) Math.ceil(distance);
+                i =  ((i + 99) / 100) * 100;
+                near_posts_dist.add(i);
+                map.put(i, post);
             }
         }
+        map.entrySet()
+                .stream()
+                .sorted(Map.Entry.<Long, Post>comparingByKey())
+                .forEach(System.out::println);
         return near_posts;
     }
 

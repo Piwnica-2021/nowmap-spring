@@ -16,10 +16,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 
     @Query(
             value = "select * from post p " +
-                    "order by p.time desc " +
-                    "limit ?1",
+                    "order by p.time desc",
             nativeQuery = true)
-    public List<Post> selectRecentPosts(Long count);
+    public List<Post> selectRecentPosts();
 
     @Query(
             value = "select * from post p " +
