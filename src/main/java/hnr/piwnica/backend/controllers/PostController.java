@@ -68,7 +68,25 @@ public class PostController {
         return recentPosts;
     }
 
+    @GetMapping("/dist")
+    public @ResponseBody Map<Long, Long> getPostsDistane(@RequestParam double lat, @RequestParam double lon)
+    {
+        List<Post> all_posts = postRepository.selectAllPosts();
+        List<Long> posts_dist = new ArrayList<Long>();
+        Map<Long, Long> map = new HashMap<>();
 
+        for(Post post: all_posts)
+        {
+            double distance = MathUtil.distanceFromCoordinates(lat, lon, post.getLatitude(), post.getLongitude());
+
+
+            long i = (long) Math.ceil(distance);
+            i =  ((i + 99) / 100) * 100;
+            posts_dist.add(i);
+            map.put(post.getPostID(), i);
+        }
+        return map;
+    }
 
     @GetMapping("/near")
     public @ResponseBody List<Post> getNearPost(@RequestParam double lat, @RequestParam double lon, @RequestParam double radius)
@@ -93,32 +111,12 @@ public class PostController {
                 map.put(i, post);
             }
         }
-        map.entrySet()
-                .stream()
-                .sorted(Map.Entry.<Long, Post>comparingByKey())
-                .forEach(System.out::println);
+//        map.entrySet()
+//                .stream()
+//                .sorted(Map.Entry.<Long, Post>comparingByKey())
+//                .forEach(System.out::println);
+
         return near_posts;
-    }
-
-    @GetMapping("/near/dist")
-    public @ResponseBody List<Long> getPostDist(@RequestParam double lat, @RequestParam double lon, @RequestParam double radius)
-    {
-        List<Post> all_posts = postRepository.selectAllPosts();
-        List<Long> near_posts_dist = new ArrayList<Long>();
-        double minDistance = radius;
-
-        for(Post post: all_posts)
-        {
-            double distance = MathUtil.distanceFromCoordinates(lat, lon, post.getLatitude(), post.getLongitude());
-
-            if(distance < minDistance)
-            {
-                long i = (long) Math.ceil(distance);
-                i =  ((i + 99) / 100) * 100;
-                near_posts_dist.add(i);
-            }
-        }
-        return near_posts_dist;
     }
 
     @GetMapping("/featured")
@@ -137,24 +135,6 @@ public class PostController {
             }
         }
         return featured_posts;
-    }
-
-    @GetMapping("/featured/upvotes")
-    public @ResponseBody List<Long> getPostUpvotes(@RequestParam Long upvotes)
-    {
-        List<Post> all_posts = postRepository.selectAllPostsOrderUpvotes();
-        List<Long> featured_posts_upvotes = new ArrayList<Long>();
-        double minUpvotes = upvotes;
-
-        for(Post post: all_posts)
-        {
-            Long postUpvotes = post.getUpvotes();
-            if(postUpvotes > minUpvotes)
-            {
-                featured_posts_upvotes.add(postUpvotes);
-            }
-        }
-        return featured_posts_upvotes;
     }
 
 }
