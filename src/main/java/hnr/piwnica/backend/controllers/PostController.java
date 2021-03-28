@@ -33,7 +33,7 @@ public class PostController {
     @PostMapping("/create")
     public long createPost(@RequestBody CreatePostRequest request) {
         var date = new Date();
-        var ownerId = 0; // TODO get logged in user id
+        var ownerId = 0;
 
         var post = new Post();
         post.setTitle(request.getTitle());
@@ -47,6 +47,14 @@ public class PostController {
         post = postRepository.save(post);
 
         return post.getPostID();
+    }
+
+    @GetMapping("/{post_id}/like")
+    public @ResponseBody Post upvotePost(@PathVariable Long post_id)
+    {
+        postRepository.updatePostUpvoted(post_id);
+        return postRepository.selectPostById(post_id);
+
     }
 
     @GetMapping("/{post_id}")

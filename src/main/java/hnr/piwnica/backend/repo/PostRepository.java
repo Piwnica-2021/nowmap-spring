@@ -39,4 +39,9 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             value = "select * from post p order by p.upvotes desc",
             nativeQuery = true)
     public List<Post> selectAllPostsOrderUpvotes();
+
+    @Query(
+            value = "update post p set p.upvotes = p.upvotes + 1 where p.postID = ?1",
+            nativeQuery = true)
+    public void updatePostUpvoted(Long post_id);
 }
